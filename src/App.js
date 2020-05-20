@@ -1,15 +1,13 @@
 import React from 'react';
-
-import logo from './logo.svg';
-import './App.css';
+import { NewsList } from 'pages/NewsList';
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>NEWS APP</p>
       </header>
+      <NewsList />
     </div>
   );
 }
