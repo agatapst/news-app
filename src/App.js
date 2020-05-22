@@ -3,13 +3,15 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { NewsList } from 'pages/NewsList';
 import { Article } from 'pages/Article';
+import { ApolloProvider } from '@apollo/react-hooks';
 
+import { client } from './apollo/clientConfig';
 import { PAGE_TITLE } from './config/constants';
 import { routes } from './config/routes';
 
 function App() {
   return (
-    <>
+    <ApolloProvider client={client}>
       <HelmetProvider>
         <Helmet titleTemplate={PAGE_TITLE} defaultTitle={PAGE_TITLE} />
       </HelmetProvider>
@@ -19,7 +21,7 @@ function App() {
           <Route exact path={routes.article()} component={Article} />
         </Switch>
       </Router>
-    </>
+    </ApolloProvider>
   );
 }
 
