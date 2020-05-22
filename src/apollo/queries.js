@@ -6,10 +6,17 @@ export const GET_ARTICLES = gql`
       id
       title
       url
+      src
       img {
-        original_url
+        url
         description
         title
+      }
+      body(t: Plain) {
+        data
+        params {
+          id
+        }
       }
     }
   }
@@ -19,8 +26,17 @@ export const GET_ARTICLE = gql`
   query getArticle($url: String!) {
     article(url: $url) {
       title
-      body {
+      tags
+      body(t: Plain) {
         data
+        params {
+          id
+        }
+      }
+      img {
+        url
+        description
+        title
       }
     }
   }
