@@ -1,11 +1,12 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { Box, Typography, Paper, CircularProgress, makeStyles } from '@material-ui/core';
+import { useParams, Link } from 'react-router-dom';
+import { Box, Typography, Paper, CircularProgress, Button, makeStyles } from '@material-ui/core';
 import { decodeUrl } from 'helpers/urlEncoder';
 import { GET_ARTICLE } from 'apollo/queries';
 import { useQuery } from '@apollo/react-hooks';
 import { Chip } from '@material-ui/core';
 import { RawHtmlParagraph } from 'components/RawHtmlParagraph';
+import { routes } from 'config/routes';
 
 const useStyles = makeStyles(() => ({
   wrapper: {
@@ -40,6 +41,9 @@ export const Article = () => {
   return (
     <Paper elevation={3} className={classes.wrapper}>
       <Box>
+        <Button component={Link} to={routes.home()} size="small" color="primary">
+          Wróć do strony głównej
+        </Button>
         <Typography variant="h5" component="h1" title="Article title">
           {article.title}
         </Typography>
