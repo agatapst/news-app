@@ -1,14 +1,14 @@
 import React from 'react';
-import { Container, Typography, Grid, makeStyles } from '@material-ui/core';
+import { Container, Typography, Grid, CircularProgress, makeStyles } from '@material-ui/core';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_ARTICLES } from 'apollo/queries';
 
 import { ArticleCard } from './ArticleCard';
 
 const useStyles = makeStyles(() => ({
-  page: {
-    backgroundColor: '#f5f5f5',
-  },
+  // page: {
+  //   backgroundColor: '#f5f5f5',
+  // },
 }));
 
 export const NewsList = () => {
@@ -16,7 +16,7 @@ export const NewsList = () => {
 
   const { loading, error, data } = useQuery(GET_ARTICLES);
 
-  if (loading) return 'Loading...';
+  if (loading) return <CircularProgress title="Loader" />;
   if (error) return 'Error!';
 
   return (

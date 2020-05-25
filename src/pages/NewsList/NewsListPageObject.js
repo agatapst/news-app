@@ -1,7 +1,12 @@
 import React from 'react';
 import { Route } from 'react-router';
 import { renderWithProviders } from 'testUtilities';
-import { findByTitle, findAllByTitle } from '@testing-library/dom';
+import {
+  findByTitle,
+  findAllByTitle,
+  waitForElementToBeRemoved,
+  queryByTitle,
+} from '@testing-library/dom';
 import { ArticleElement } from 'testUtilities/helperElements';
 import { routes } from 'config/routes';
 
@@ -14,6 +19,7 @@ export class NewsListPageObject {
       mocks,
       routes.home()
     );
+    await waitForElementToBeRemoved(queryByTitle(container, 'Loader'));
     return new NewsListPageObject(container, history);
   }
 

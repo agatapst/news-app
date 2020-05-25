@@ -64,7 +64,7 @@ export const ArticleCard = ({ article }) => {
           className={classes.header}
           titleTypographyProps={{ className: classes.headerText, title: 'Article title' }}
         />
-        <CardMedia image={img.url} title={img.title} className={classes.media} />
+        {img && <CardMedia image={img.url} title={img.title} className={classes.media} />}
 
         <CardContent className={classes.content}>
           {article.body[0].data.slice(0, 100)}...

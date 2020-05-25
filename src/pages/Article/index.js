@@ -1,35 +1,63 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Container } from '@material-ui/core';
+import { Box, Typography, Paper, CircularProgress, makeStyles } from '@material-ui/core';
 import { decodeUrl } from 'helpers/urlEncoder';
 import { GET_ARTICLE } from 'apollo/queries';
 import { useQuery } from '@apollo/react-hooks';
 import { Chip } from '@material-ui/core';
+import { RawHtmlParagraph } from 'components/RawHtmlParagraph';
+
+const useStyles = makeStyles(() => ({
+  wrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+    margin: '20px auto',
+    width: 640,
+  },
+  tagsContainer: {
+    height: 60,
+    paddingTop: 5,
+    paddingBottom: 0,
+  },
+  tag: {
+    margin: '0 10px 10px 0',
+  },
+}));
 
 export const Article = () => {
   const { id } = useParams();
+  const classes = useStyles();
 
   const { loading, error, data } = useQuery(GET_ARTICLE, { variables: { url: decodeUrl(id) } });
 
-  if (loading) return 'Loading...';
+  if (loading) return <CircularProgress title="Loader" />;
   if (error) return 'Error!';
 
   const { article } = data;
 
   return (
-    <Container>
-      <p>This is an article {decodeUrl(id)}</p>
-      <div>
-        {article.tags.map((tag) => (
-          <Chip key={tag} label={tag} size="small" />
-        ))}
-      </div>
+    <Paper elevation={3} className={classes.wrapper}>
+      <Box>
+        <Typography variant="h5" component="h1" title="Article title">
+          {article.title}
+        </Typography>
+        {article.tags.length > 0 && (
+          <div className={classes.tagsContainer} title="Tags list">
+            {article.tags.map((tag) => (
+              <Chip key={tag} label={tag} size="small" className={classes.tag} title="Tag" />
+            ))}
+          </div>
+        )}
+        <Box>
+          <img src={article.img.url} style={{ width: '100%' }} alt={article.img.title} />
 
-      {article.title}
-      <img src={article.img.url} style={{ width: '100%' }} alt={article.img.title} />
-      {article.body.map((paragraph) => (
-        <div key={paragraph.params.id}>{paragraph.data}</div>
-      ))}
-    </Container>
+          {article.body.map((paragraph, index) => (
+            <RawHtmlParagraph key={index} content={paragraph.data} />
+          ))}
+        </Box>
+      </Box>
+    </Paper>
   );
 };

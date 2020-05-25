@@ -1,4 +1,4 @@
-import { GET_ARTICLES } from 'apollo/queries';
+import { GET_ARTICLES, GET_ARTICLE } from 'apollo/queries';
 
 export const getArticlesMock = () => ({
   request: { query: GET_ARTICLES },
@@ -46,6 +46,32 @@ export const getArticlesMock = () => ({
           __typename: 'Article',
         },
       ],
+    },
+  },
+});
+
+export const getArticleMock = (url) => ({
+  request: { query: GET_ARTICLE, variables: { url } },
+  result: {
+    data: {
+      article: {
+        body: [
+          {
+            data: '<p title="Article text">Article text</p>',
+            __typename: 'ArticleBody',
+          },
+        ],
+        img: {
+          title: 'Article 1 img',
+          url:
+            'https://i.wpimg.pl/1920x1080/m.autokult.pl/bez-nazwy-3-0c5a225c49100df93fb7,0,0,0,0.jpg',
+          description: '',
+          __typename: 'ArticleWebAsset',
+        },
+        title: 'Article title',
+        tags: ['tag 1', 'tag 2'],
+        __typename: 'Article',
+      },
     },
   },
 });

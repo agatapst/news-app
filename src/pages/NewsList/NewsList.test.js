@@ -10,7 +10,7 @@ describe('News List Page', () => {
     page = await NewsListPageObject.render([getArticlesMock()]);
   });
 
-  it('show titles of articles', async () => {
+  it('shows titles of articles', async () => {
     expect((await page.getArticles()).map((article) => article.title)).toEqual([
       'Article 1 title',
       'Article 2 title',
