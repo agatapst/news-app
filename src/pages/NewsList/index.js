@@ -59,15 +59,15 @@ export const NewsList = () => {
       <Typography variant="h5" component="h1">
         News list
       </Typography>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} title="News list">
         {data.articles.map((article) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={article.id}>
+          <Grid item xs={12} sm={6} md={4} lg={3} key={article.id} title="Article">
             <Card className={classes.card}>
               <CardHeader
                 title={article.title}
                 subheader={article.src}
                 className={classes.header}
-                titleTypographyProps={{ className: classes.headerText }}
+                titleTypographyProps={{ className: classes.headerText, title: 'Article title' }}
               />
               <CardMedia
                 image={article.img.url}
