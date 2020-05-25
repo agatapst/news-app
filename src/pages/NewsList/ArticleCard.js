@@ -8,7 +8,6 @@ import {
   CardMedia,
   CardContent,
   CardActions,
-  Grid,
   makeStyles,
 } from '@material-ui/core';
 import { routes } from 'config/routes';
@@ -53,29 +52,25 @@ const useStyles = makeStyles(() => ({
 export const ArticleCard = ({ article }) => {
   const classes = useStyles();
 
-  const { id, title, src, img, url } = article;
+  const { title, src, img, url } = article;
 
   return (
-    <Grid item xs={12} sm={6} md={4} lg={3} key={id} title="Article">
-      <Card className={classes.card}>
-        <CardHeader
-          title={title}
-          subheader={src}
-          className={classes.header}
-          titleTypographyProps={{ className: classes.headerText, title: 'Article title' }}
-        />
-        {img && <CardMedia image={img.url} title={img.title} className={classes.media} />}
+    <Card className={classes.card} title="Article">
+      <CardHeader
+        title={title}
+        subheader={src}
+        className={classes.header}
+        titleTypographyProps={{ className: classes.headerText, title: 'Article title' }}
+      />
+      {img && <CardMedia image={img.url} title={img.title} className={classes.media} />}
 
-        <CardContent className={classes.content}>
-          {article.body[0].data.slice(0, 100)}...
-        </CardContent>
-        <CardActions>
-          <Button component={Link} to={routes.article(encodeUrl(url))} size="small" color="primary">
-            Przeczytaj
-          </Button>
-        </CardActions>
-      </Card>
-    </Grid>
+      <CardContent className={classes.content}>{article.body[0].data.slice(0, 100)}...</CardContent>
+      <CardActions>
+        <Button component={Link} to={routes.article(encodeUrl(url))} size="small" color="primary">
+          Przeczytaj
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
 

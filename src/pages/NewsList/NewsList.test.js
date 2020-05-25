@@ -17,6 +17,10 @@ describe('News List Page', () => {
     ]);
   });
 
+  it('shows pagination', async () => {
+    expect(page.pagination).toBeInTheDocument();
+  });
+
   it('redirects to the article content', async () => {
     const articles = await page.getArticles();
     articles[0].clickReadMore();

@@ -1,8 +1,8 @@
 import { gql } from 'apollo-boost';
 
 export const GET_ARTICLES = gql`
-  query getArticles {
-    articles(t: Article, limit: 10) {
+  query getArticles($limit: Int!, $offset: Int!) {
+    articles(t: Article, limit: $limit, offset: $offset) {
       id
       title
       url
