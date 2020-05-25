@@ -14,9 +14,6 @@ export const GET_ARTICLES = gql`
       }
       body(t: Plain) {
         data
-        params {
-          id
-        }
       }
     }
   }
