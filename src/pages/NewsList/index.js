@@ -8,8 +8,10 @@ import {
   AppBar,
   Toolbar,
   Box,
+  IconButton,
   makeStyles,
 } from '@material-ui/core';
+import RefreshIcon from '@material-ui/icons/Refresh';
 import { Pagination } from '@material-ui/lab';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_ARTICLES } from 'apollo/queries';
@@ -20,6 +22,12 @@ import { ArticleCard } from './ArticleCard';
 const useStyles = makeStyles(() => ({
   appBar: {
     marginBottom: 10,
+  },
+  appHeader: {
+    flex: 1,
+  },
+  toolbar: {
+    padding: 0,
   },
   paginationContainer: {
     display: 'flex',
@@ -40,8 +48,9 @@ export const NewsList = () => {
   const searchParams = new URLSearchParams(location.search);
   const [page, setPage] = useState(parseInt(searchParams.get('page') || 1));
 
-  const { loading, error, data } = useQuery(GET_ARTICLES, {
+  const { loading, error, data, refetch } = useQuery(GET_ARTICLES, {
     variables: { limit: ARTICLES_PER_PAGE, offset: (page - 1) * ARTICLES_PER_PAGE },
+    fetchPolicy: 'cache-and-network',
   });
 
   const handlePageChange = (_event, page) => {
@@ -50,7 +59,7 @@ export const NewsList = () => {
     history.push({ pathname: location.pathname, search: '?' + searchParams.toString() });
   };
 
-  if (loading)
+  if (loading && !data)
     return (
       <div className={classes.loader}>
         <CircularProgress title="Loader" />
@@ -61,13 +70,16 @@ export const NewsList = () => {
   return (
     <>
       <AppBar position="static" className={classes.appBar}>
-        <Toolbar>
-          <Container>
-            <Typography variant="h6" component="h1">
+        <Container>
+          <Toolbar className={classes.toolbar}>
+            <Typography variant="h6" component="h1" className={classes.appHeader}>
               News
             </Typography>
-          </Container>
-        </Toolbar>
+            <IconButton onClick={() => refetch()} color="inherit">
+              <RefreshIcon />
+            </IconButton>
+          </Toolbar>
+        </Container>
       </AppBar>
       <Container className={classes.page}>
         <Grid container spacing={2} title="News list">
