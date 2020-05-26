@@ -7,7 +7,7 @@ import {
   waitForElementToBeRemoved,
   queryByTitle,
 } from '@testing-library/dom';
-import { ArticleElement } from 'testUtilities/helperElements';
+import { ArticleElement, PaginationElement } from 'testUtilities/helperElements';
 import { routes } from 'config/routes';
 
 import { NewsList } from '.';
@@ -19,13 +19,16 @@ export class NewsListPageObject {
       mocks,
       routes.home()
     );
-    await waitForElementToBeRemoved(queryByTitle(container, 'Loader'));
     return new NewsListPageObject(container, history);
   }
 
   constructor(container, history) {
     this.container = container;
     this.history = history;
+  }
+
+  async waitUntilLoaded() {
+    await waitForElementToBeRemoved(queryByTitle(this.container, 'Loader'));
   }
 
   async getArticles() {
@@ -36,5 +39,13 @@ export class NewsListPageObject {
 
   get pathname() {
     return this.history.location.pathname;
+  }
+
+  get queryParams() {
+    return this.history.location.search;
+  }
+
+  get pagination() {
+    return new PaginationElement(queryByTitle(this.container, 'Pagination'));
   }
 }
