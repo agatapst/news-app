@@ -12,7 +12,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Setup
 - Available scripts
 - Technologies
-- Additional info
 
 ### General info
 
@@ -20,12 +19,18 @@ Project is a simple app for people who want to explore the latest news. You can 
 
 ## Setup
 
-### 1. `yarn`
+### 1. Set up env variables
 
-First install all dependencies.
+- Create `.env` file in the project root.
+- Copy content of the `.env.sample` template into it.
+- Set the `REACT_APP_API_ENDPOINT` value to wpmobile.pl GraphQL API endpoint.
+
+### 2. `yarn`
+
+Install all dependencies.
 In the project directory, you can run `yarn`.
 
-### 2. `yarn start`
+### 3. `yarn start`
 
 Then you can run the app in the development mode with `yarn start`.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
