@@ -17,7 +17,9 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'center',
     padding: 20,
     margin: '20px auto',
-    width: 640,
+    width: '100%',
+    maxWidth: 640,
+    boxSizing: 'border-box',
     '& img': {
       maxWidth: '100%',
     },
@@ -80,9 +82,11 @@ export const Article = () => {
             <EmptyStateImage />
           )}
 
-          {article.body.map((paragraph, index) => (
-            <RawHtmlParagraph key={index} content={paragraph.data} />
-          ))}
+          {article.bodyHTML.length > 0
+            ? article.bodyHTML.map((paragraph, index) => (
+                <RawHtmlParagraph key={index} content={paragraph.data} />
+              ))
+            : article.bodyPlain.map((paragraph, index) => <p key={index}>{paragraph.data}</p>)}
         </Box>
       </Box>
     </Paper>

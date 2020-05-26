@@ -85,12 +85,13 @@ export const getArticleMock = (url) => ({
   result: {
     data: {
       article: {
-        body: [
+        bodyHTML: [
           {
             data: '<p title="Article text">Article text</p>',
             __typename: 'ArticleBody',
           },
         ],
+        bodyPlain: [],
         img: {
           title: 'Article 1 img',
           url:

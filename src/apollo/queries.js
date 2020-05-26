@@ -24,7 +24,10 @@ export const GET_ARTICLE = gql`
     article(url: $url) {
       title
       tags
-      body(t: HTML) {
+      bodyHTML: body(t: HTML) {
+        data
+      }
+      bodyPlain: body(t: Plain) {
         data
       }
       img {
