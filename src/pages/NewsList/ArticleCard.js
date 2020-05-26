@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import { routes } from 'config/routes';
 import { encodeUrl } from 'helpers/urlEncoder';
+import { EmptyStateImage } from 'components/EmptyStateImage';
 
 const propTypes = {
   article: PropTypes.shape({
@@ -62,8 +63,11 @@ export const ArticleCard = ({ article }) => {
         className={classes.header}
         titleTypographyProps={{ className: classes.headerText, title: 'Article title' }}
       />
-      {img && <CardMedia image={img.url} title={img.title} className={classes.media} />}
-
+      {img ? (
+        <CardMedia image={img.url} title={img.title} className={classes.media} />
+      ) : (
+        <EmptyStateImage />
+      )}
       <CardContent className={classes.content}>{article.body[0].data.slice(0, 100)}...</CardContent>
       <CardActions>
         <Button component={Link} to={routes.article(encodeUrl(url))} size="small" color="primary">

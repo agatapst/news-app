@@ -7,6 +7,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { Chip } from '@material-ui/core';
 import { RawHtmlParagraph } from 'components/RawHtmlParagraph';
 import { routes } from 'config/routes';
+import { EmptyStateImage } from 'components/EmptyStateImage';
 
 const useStyles = makeStyles(() => ({
   wrapper: {
@@ -25,6 +26,14 @@ const useStyles = makeStyles(() => ({
   tag: {
     margin: '0 10px 10px 0',
   },
+  img: {
+    width: '100%',
+  },
+  loader: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
 }));
 
 export const Article = () => {
@@ -33,8 +42,13 @@ export const Article = () => {
 
   const { loading, error, data } = useQuery(GET_ARTICLE, { variables: { url: decodeUrl(id) } });
 
-  if (loading) return <CircularProgress title="Loader" />;
-  if (error) return 'Error!';
+  if (loading)
+    return (
+      <div className={classes.loader}>
+        <CircularProgress title="Loader" />
+      </div>
+    );
+  if (error) return 'Sorry, something went wrong. Please try again.';
 
   const { article } = data;
 
@@ -55,7 +69,11 @@ export const Article = () => {
           </div>
         )}
         <Box>
-          <img src={article.img.url} style={{ width: '100%' }} alt={article.img.title} />
+          {article.img ? (
+            <img src={article.img.url} alt={article.img.title} className={classes.img} />
+          ) : (
+            <EmptyStateImage />
+          )}
 
           {article.body.map((paragraph, index) => (
             <RawHtmlParagraph key={index} content={paragraph.data} />

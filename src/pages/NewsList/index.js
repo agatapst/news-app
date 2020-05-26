@@ -13,10 +13,9 @@ import {
 import { Pagination } from '@material-ui/lab';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_ARTICLES } from 'apollo/queries';
+import { ARTICLES_PER_PAGE } from 'config/constants';
 
 import { ArticleCard } from './ArticleCard';
-
-const PER_PAGE = 12;
 
 const useStyles = makeStyles(() => ({
   appBar: {
@@ -26,6 +25,11 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     justifyContent: 'center',
     margin: '40px 0',
+  },
+  loader: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: 10,
   },
 }));
 
@@ -37,7 +41,7 @@ export const NewsList = () => {
   const [page, setPage] = useState(parseInt(searchParams.get('page') || 1));
 
   const { loading, error, data } = useQuery(GET_ARTICLES, {
-    variables: { limit: PER_PAGE, offset: (page - 1) * PER_PAGE },
+    variables: { limit: ARTICLES_PER_PAGE, offset: (page - 1) * ARTICLES_PER_PAGE },
   });
 
   const handlePageChange = (_event, page) => {
@@ -46,8 +50,13 @@ export const NewsList = () => {
     history.push({ pathname: location.pathname, search: '?' + searchParams.toString() });
   };
 
-  if (loading) return <CircularProgress title="Loader" />;
-  if (error) return 'Error!';
+  if (loading)
+    return (
+      <div className={classes.loader}>
+        <CircularProgress title="Loader" />
+      </div>
+    );
+  if (error) return 'Sorry, something went wrong. Please try again.';
 
   return (
     <>
