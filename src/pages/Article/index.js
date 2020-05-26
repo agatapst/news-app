@@ -17,6 +17,9 @@ const useStyles = makeStyles(() => ({
     padding: 20,
     margin: '20px auto',
     width: 640,
+    '& img': {
+      maxWidth: '100%',
+    },
   },
   tagsContainer: {
     height: 60,

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, makeStyles } from '@material-ui/core';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
+import { colorNames } from 'config/variables';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -8,7 +9,7 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'center',
     alignItems: 'center',
     height: 200,
-    backgroundColor: '#f6f6f0',
+    backgroundColor: colorNames.emptyStateBackground,
   },
 }));
 

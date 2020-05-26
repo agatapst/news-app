@@ -1,5 +1,4 @@
 import { getArticlesMock, getSecondPageArticlesMock } from 'testUtilities/mocks/queryMocks';
-// import { prettyDOM } from '@testing-library/dom';
 
 import { NewsListPageObject } from './NewsListPageObject';
 
