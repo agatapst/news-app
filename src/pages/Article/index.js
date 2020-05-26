@@ -5,6 +5,7 @@ import { decodeUrl } from 'helpers/urlEncoder';
 import { GET_ARTICLE } from 'apollo/queries';
 import { useQuery } from '@apollo/react-hooks';
 import { Chip } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { RawHtmlParagraph } from 'components/RawHtmlParagraph';
 import { routes } from 'config/routes';
 import { EmptyStateImage } from 'components/EmptyStateImage';
@@ -45,13 +46,14 @@ export const Article = () => {
 
   const { loading, error, data } = useQuery(GET_ARTICLE, { variables: { url: decodeUrl(id) } });
 
-  if (loading)
+  if (loading && !data)
     return (
       <div className={classes.loader}>
         <CircularProgress title="Loader" />
       </div>
     );
-  if (error) return 'Sorry, something went wrong. Please try again.';
+
+  if (error) return <Alert severity="error">Nie udało się pobrać artykułu.</Alert>;
 
   const { article } = data;
 

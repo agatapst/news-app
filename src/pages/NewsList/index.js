@@ -12,7 +12,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import RefreshIcon from '@material-ui/icons/Refresh';
-import { Pagination } from '@material-ui/lab';
+import { Pagination, Alert } from '@material-ui/lab';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_ARTICLES } from 'apollo/queries';
 import { ARTICLES_PER_PAGE } from 'config/constants';
@@ -37,7 +37,7 @@ const useStyles = makeStyles(() => ({
   loader: {
     display: 'flex',
     justifyContent: 'center',
-    marginTop: 10,
+    margin: '10px 0',
   },
 }));
 
@@ -59,14 +59,6 @@ export const NewsList = () => {
     history.push({ pathname: location.pathname, search: '?' + searchParams.toString() });
   };
 
-  if (loading && !data)
-    return (
-      <div className={classes.loader}>
-        <CircularProgress title="Loader" />
-      </div>
-    );
-  if (error) return 'Sorry, something went wrong. Please try again.';
-
   return (
     <>
       <AppBar position="static" className={classes.appBar}>
@@ -82,24 +74,34 @@ export const NewsList = () => {
         </Container>
       </AppBar>
       <Container className={classes.page}>
-        <Grid container spacing={2} title="News list">
-          {data.articles.map((article) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={article.id}>
-              <ArticleCard article={article} />
+        {error && <Alert severity="error">Nie można pobrać nowych artykułów.</Alert>}
+        {loading && (
+          <div className={classes.loader}>
+            <CircularProgress title="Loader" />
+          </div>
+        )}
+        {data && (
+          <>
+            <Grid container spacing={2} title="News list">
+              {data.articles.map((article) => (
+                <Grid item xs={12} sm={6} md={4} lg={3} key={article.id}>
+                  <ArticleCard article={article} />
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
-        <Box className={classes.paginationContainer}>
-          <Pagination
-            title="Pagination"
-            count={page + 1}
-            page={page}
-            siblingCount={0}
-            boundaryCount={1}
-            onChange={handlePageChange}
-            color="primary"
-          />
-        </Box>
+            <Box className={classes.paginationContainer}>
+              <Pagination
+                title="Pagination"
+                count={page + 1}
+                page={page}
+                siblingCount={0}
+                boundaryCount={1}
+                onChange={handlePageChange}
+                color="primary"
+              />
+            </Box>
+          </>
+        )}
       </Container>
     </>
   );
